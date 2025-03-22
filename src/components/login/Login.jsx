@@ -91,11 +91,11 @@ const Login = () => {
         <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-4xl">
           <div className="w-full px-8 pt-4 pb-6">
             <p className="text-xl text-gray-600 text-center">Welcome back</p>
-            <div className="btn w-full mt-4 gap-2" onClick={googleSignIn}>
+            {/* <div className="btn w-full mt-4 gap-2" onClick={googleSignIn}>
               <FcGoogle size={22} />
               Sign in with google
-            </div>
-            <div className="divider text-xs text-gray-400 uppercase">or login with email</div>
+            </div> */}
+            <div className="divider text-xs text-gray-400 uppercase"> login with email</div>
             <form className="form-control" onSubmit={handleSubmit}>
               <div>
                 <label className="label-text font-bold mb-2 block">Email Address</label>

@@ -61,11 +61,11 @@ const Contact = () => {
                   <div className="flex items-center gap-2 md:text-xl  my-2">
                      <AiOutlineTwitter />
                      <a
-                        href="https://twitter.com/kartik_im"
+                        href="https://twitter.com/"
                         rel="noreferrer"
                         target="_blank"
                      >
-                        @kartik_im
+                        @bala
                      </a>
                   </div>
                </div>

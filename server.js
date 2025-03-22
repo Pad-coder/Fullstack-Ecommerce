@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const app = express();
+const app = express(); 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static("build"));
 	app.get("*", (req, res) => {
@@ -10,7 +10,13 @@ if (process.env.NODE_ENV === "production") {
 	});
 }
 // This is your test secret API key.
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const Razorpay = require("razorpay");
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+const stripe = new Razorpay({
+    key_id: process.env.Key_ID,
+    key_secret: process.env.Key_Secret,
+});
 
 app.use(express.json());
 app.use(cors());
@@ -30,28 +36,20 @@ const calculateOrderAmount = (items) => {
 	return totalCartAmount * 100;
 };
 
+
+
 app.post("/create-payment-intent", async (req, res) => {
 	const { items, shippingAddress, description } = req.body;
 	console.log(shippingAddress);
 	// Create a PaymentIntent with the order amount and currency
-	const paymentIntent = await stripe.paymentIntents.create({
+	const paymentIntent = await stripe.orders.create({
 		amount: calculateOrderAmount(items),
 		currency: "inr",
 		automatic_payment_methods: {
 			enabled: true,
 		},
 		description,
-		shipping: {
-			address: {
-				line1: shippingAddress.line1,
-				line2: shippingAddress.line2,
-				city: shippingAddress.city,
-				country: shippingAddress.country,
-				// pin_code: shippingAddress.pin_code,
-			},
-			name: shippingAddress.name,
-			phone: shippingAddress.phone,
-		},
+		receipt: `order_rcptid_${Math.floor(Math.random() * 1000)}`,
 	});
 
 	res.send({
